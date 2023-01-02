@@ -9,8 +9,8 @@ rowElement.onkeypress = (e) => {
     let rows = rowElement.value
     if (e.keyCode == 13) {
         containerElement.innerHTML = `<label for="totalCredits">Tổng số tín chỉ:</label>
-        <input type="number" name="totalCredits" class="totalCredits" disabled><label for="all-overall">Điểm trung bình:</label>
-        <input type="number" name="all-overall" class="all-overall" disabled><label for="totalOverall">Tổng điểm trung bình:</label>
+        <input type="number" name="totalCredits" class="totalCredits" disabled><label for="all-overall">Tổng điểm trung bình:</label>
+        <input type="number" name="all-overall" class="all-overall" disabled><label for="totalOverall">Điểm trung bình:</label>
         <input type="number" name="totalOverall" class="totalOverall" disabled><button class="solve">Solve</button>`
         let htmls = []
         for (i = 0; i < rows; i++) {
