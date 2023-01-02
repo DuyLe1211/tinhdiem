@@ -16,15 +16,15 @@ rowElement.onkeypress = (e) => {
         for (i = 0; i < rows; i++) {
             htmls.push(`<div class="root-container">
             <label for="subject">Môn:</label>
-        <input type="text" class=${'subject'+i} placeholder="Môn" name="subject">
+        <input type="text" class=${'subject'+i} name="subject">
         <label for="mark">Điểm:</label>
-        <input type="number" name="mark" class=${'mark'+i} placeholder="Nhập điểm">
+        <input type="number" name="mark" class=${'mark'+i}>
         <label for="grade">Loại:</label>
-        <input type="text" class=${'grade'+i} placeholder="Loại" name="grade" disabled>
+        <input type="text" class=${'grade'+i} name="grade" disabled>
         <label for="credits">Số tín chỉ:</label>
-        <input type="number" name="credits" class=${'credits'+i} placeholder="Nhập số tín chỉ">
+        <input type="number" name="credits" class=${'credits'+i}>
         <label for="overall">Điểm trung bình:</label>
-        <input type="number" name="overall" class=${'overall'+i} placeholder="Điểm trung bình" disabled>
+        <input type="number" name="overall" class=${'overall'+i} disabled>
             </div>`)
         }
         let html = htmls.join('')
@@ -71,15 +71,15 @@ rowElement.oninput = (e) => {
         for (i = 0; i < rows; i++) {
             htmls.push(`<div class="root-container">
             <label for="subject">Môn:</label>
-        <input type="text" class=${'subject'+i} placeholder="Môn" name="subject">
+        <input type="text" class=${'subject'+i} name="subject">
         <label for="mark">Điểm:</label>
-        <input type="number" name="mark" class=${'mark'+i} placeholder="Nhập điểm">
+        <input type="number" name="mark" class=${'mark'+i}>
         <label for="grade">Loại:</label>
-        <input type="text" class=${'grade'+i} placeholder="Loại" name="grade" disabled>
+        <input type="text" class=${'grade'+i} name="grade" disabled>
         <label for="credits">Số tín chỉ:</label>
-        <input type="number" name="credits" class=${'credits'+i} placeholder="Nhập số tín chỉ">
+        <input type="number" name="credits" class=${'credits'+i}>
         <label for="overall">Điểm trung bình:</label>
-        <input type="number" name="overall" class=${'overall'+i} placeholder="Điểm trung bình" disabled>
+        <input type="number" name="overall" class=${'overall'+i} disabled>
             </div>`)
         }
         let html = htmls.join('')
