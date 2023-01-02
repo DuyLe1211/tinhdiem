@@ -53,8 +53,8 @@ rowElement.onkeypress = (e) => {
                 allOverall += Number(overallElement.value)
                 totalCreadits += Number(credits)
             }
-            totalOverall = (allOverall / rootContainerElement.length) / totalCreadits
-            allOverallElement.value = allOverall / rootContainerElement.length
+            totalOverall = allOverall / totalCreadits
+            allOverallElement.value = allOverall
             totalCreditsElement.value = totalCreadits
             totalOverallElement.value = totalOverall
         }
