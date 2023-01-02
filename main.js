@@ -64,8 +64,8 @@ rowElement.oninput = (e) => {
     let rows = rowElement.value
     submitElement.onclick = () => {
         containerElement.innerHTML = `<label for="totalCredits">Tổng số tín chỉ:</label>
-        <input type="number" name="totalCredits" class="totalCredits" disabled><label for="all-overall">Điểm trung bình:</label>
-        <input type="number" name="all-overall" class="all-overall" disabled><label for="totalOverall">Tổng điểm trung bình:</label>
+        <input type="number" name="totalCredits" class="totalCredits" disabled><label for="all-overall">Tổng điểm trung bình:</label>
+        <input type="number" name="all-overall" class="all-overall" disabled><label for="totalOverall">Điểm trung bình:</label>
         <input type="number" name="totalOverall" class="totalOverall" disabled><button class="solve">Solve</button>`
         let htmls = []
         for (i = 0; i < rows; i++) {
@@ -108,8 +108,8 @@ rowElement.oninput = (e) => {
                 allOverall += Number(overallElement.value)
                 totalCreadits += Number(credits)
             }
-            totalOverall = (allOverall / rootContainerElement.length) / totalCreadits
-            allOverallElement.value = allOverall / rootContainerElement.length
+            totalOverall = allOverall / totalCreadits
+            allOverallElement.value = allOverall
             totalCreditsElement.value = totalCreadits
             totalOverallElement.value = totalOverall
         }
