@@ -3,15 +3,14 @@ let submitElement = document.querySelector('.submit')
 let containerElement = document.querySelector('.container')
 let rootElement = document.querySelector('.root')
 let rootContainerElement
-
+let overallRow = `<label for="totalCredits">Tổng số tín chỉ:</label>
+<input type="number" name="totalCredits" class="totalCredits" disabled><label for="all-overall">Tổng điểm trung bình:</label>
+<input type="number" name="all-overall" class="all-overall" disabled><label for="totalOverall">Điểm trung bình:</label>
+<input type="number" name="totalOverall" class="totalOverall" disabled><button class="solve">Solve</button>`
 rowElement.onkeypress = (e) => {
-    
     let rows = rowElement.value
     if (e.keyCode == 13) {
-        containerElement.innerHTML = `<label for="totalCredits">Tổng số tín chỉ:</label>
-        <input type="number" name="totalCredits" class="totalCredits" disabled><label for="all-overall">Tổng điểm trung bình:</label>
-        <input type="number" name="all-overall" class="all-overall" disabled><label for="totalOverall">Điểm trung bình:</label>
-        <input type="number" name="totalOverall" class="totalOverall" disabled><button class="solve">Solve</button>`
+        containerElement.innerHTML = overallRow
         let htmls = []
         for (i = 0; i < rows; i++) {
             htmls.push(`<div class="root-container">
@@ -30,43 +29,14 @@ rowElement.onkeypress = (e) => {
         let html = htmls.join('')
         rootElement.innerHTML = `${html}`
         rootContainerElement = document.querySelectorAll('.root-container')
-
-        let totalOverallElement = document.querySelector('.totalOverall')
-        let totalCreditsElement = document.querySelector('.totalCredits')
-        let allOverallElement = document.querySelector('.all-overall')
         let solveBtn = document.querySelector('.solve')
-        solveBtn.onclick = () => {
-            let totalOverall = 0
-            let totalCreadits = 0
-            let allOverall = 0
-            for (let i = 0; i < rootContainerElement.length; i++) {
-                let markElement = document.querySelector(`.mark${i}`)
-                let gradeElement = document.querySelector(`.grade${i}`)
-                let creditsElement = document.querySelector(`.credits${i}`)
-                let overallElement = document.querySelector(`.overall${i}`)
-                let mark = markElement.value
-                let grade = checkMark(mark)
-                gradeElement.value = grade
-                let credits = creditsElement.value
-                let marks = changeGradetoMark(grade)
-                overallElement.value = marks * credits
-                allOverall += Number(overallElement.value)
-                totalCreadits += Number(credits)
-            }
-            totalOverall = allOverall / totalCreadits
-            allOverallElement.value = allOverall
-            totalCreditsElement.value = totalCreadits
-            totalOverallElement.value = totalOverall
-        }
+        solveBtn.onclick = handleSubmitClick
     }
 }
 rowElement.oninput = (e) => {
     let rows = rowElement.value
     submitElement.onclick = () => {
-        containerElement.innerHTML = `<label for="totalCredits">Tổng số tín chỉ:</label>
-        <input type="number" name="totalCredits" class="totalCredits" disabled><label for="all-overall">Tổng điểm trung bình:</label>
-        <input type="number" name="all-overall" class="all-overall" disabled><label for="totalOverall">Điểm trung bình:</label>
-        <input type="number" name="totalOverall" class="totalOverall" disabled><button class="solve">Solve</button>`
+        containerElement.innerHTML = overallRow
         let htmls = []
         for (i = 0; i < rows; i++) {
             htmls.push(`<div class="root-container">
@@ -84,37 +54,38 @@ rowElement.oninput = (e) => {
         }
         let html = htmls.join('')
         rootElement.innerHTML = `${html}`
-        rootContainerElement = document.querySelectorAll('.root-container')
-        
-        let totalOverallElement = document.querySelector('.totalOverall')
-        let totalCreditsElement = document.querySelector('.totalCredits')
-        let allOverallElement = document.querySelector('.all-overall')
         let solveBtn = document.querySelector('.solve')
-        solveBtn.onclick = () => {
-            let totalOverall = 0
-            let totalCreadits = 0
-            let allOverall = 0
-            for (let i = 0; i < rootContainerElement.length; i++) {
-                let markElement = document.querySelector(`.mark${i}`)
-                let gradeElement = document.querySelector(`.grade${i}`)
-                let creditsElement = document.querySelector(`.credits${i}`)
-                let overallElement = document.querySelector(`.overall${i}`)
-                let mark = markElement.value
-                let grade = checkMark(mark)
-                gradeElement.value = grade
-                let credits = creditsElement.value
-                let marks = changeGradetoMark(grade)
-                overallElement.value = marks * credits
-                allOverall += Number(overallElement.value)
-                totalCreadits += Number(credits)
-            }
-            totalOverall = allOverall / totalCreadits
-            allOverallElement.value = allOverall
-            totalCreditsElement.value = totalCreadits
-            totalOverallElement.value = totalOverall
-        }
+        solveBtn.onclick = handleSubmitClick
         
     }
+}
+
+function handleSubmitClick() {
+    rootContainerElement = document.querySelectorAll('.root-container')
+    let totalOverallElement = document.querySelector('.totalOverall')
+    let totalCreditsElement = document.querySelector('.totalCredits')
+    let allOverallElement = document.querySelector('.all-overall')
+    let totalOverall = 0
+    let totalCreadits = 0
+    let allOverall = 0
+    for (let i = 0; i < rootContainerElement.length; i++) {
+        let markElement = document.querySelector(`.mark${i}`)
+        let gradeElement = document.querySelector(`.grade${i}`)
+        let creditsElement = document.querySelector(`.credits${i}`)
+        let overallElement = document.querySelector(`.overall${i}`)
+        let mark = markElement.value
+        let grade = checkMark(mark)
+        gradeElement.value = grade
+        let credits = creditsElement.value
+        let marks = changeGradetoMark(grade)
+        overallElement.value = marks * credits
+        allOverall += Number(overallElement.value)
+        totalCreadits += Number(credits)
+    }
+    totalOverall = allOverall / totalCreadits
+    allOverallElement.value = allOverall
+    totalCreditsElement.value = totalCreadits
+    totalOverallElement.value = totalOverall
 }
 
 function checkMark(mark) {
@@ -128,12 +99,16 @@ function checkMark(mark) {
         return 'B'
     } else if (mark >= 6.5) {
         return 'C+'
-    }else if (mark >= 5.5) {
+    } else if (mark >= 5.5) {
         return 'C'
-    }else if (mark >= 5) {
+    } else if (mark >= 5) {
         return 'D+'
-    }else if (mark < 5){
+    } else if (mark >= 4){
         return 'D'
+    } else if (mark >= 3){
+        return 'F+'
+    } else if (mark < 3){
+        return 'F'
     }
 }
 
@@ -153,6 +128,10 @@ function changeGradetoMark(grade) {
         output = 1.5
     } else if (grade == 'D') {
         output = 1
+    } else if (grade == 'F+') {
+        output = 0.5
+    } else if (grade == 'F') {
+        output = 0
     }
     return output
 }
