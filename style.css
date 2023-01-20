@@ -1,38 +1,17 @@
-body, button{
-    font-family: 'Roboto', sans-serif;
-}
-
-.container {
+.page-container {
     display: flex;
     align-items: center;
 }
 
-.root {
-    width: 100vw;
+.page-container input {
+    margin: 0 5px;
 }
 
 .root-container {
-    width: 95vw;
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    border: solid 2px rgb(82, 82, 82);
-    margin-bottom: 10px;
-    border-radius: 4px;
-}
-
-.root-container input {
-    margin-right: 10px;
-}
-
-label {
-    font-size: 1.5vw;
-    margin-right: 3px;
-}
-
-@media only screen and (max-width: 426px) {
-    .root-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+    
+    border: solid 3px rgb(69, 69, 69);
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 5px;
 }

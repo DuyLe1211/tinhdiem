@@ -1,12 +1,12 @@
 let rowElement = document.querySelector('.row')
 let submitElement = document.querySelector('.submit')
-let containerElement = document.querySelector('.container')
+let containerElement = document.querySelector('.page-container')
 let rootElement = document.querySelector('.root')
 let rootContainerElement
 let overallRow = `<label for="totalCredits">Tổng số tín chỉ:</label>
 <input type="number" name="totalCredits" class="totalCredits" disabled><label for="all-overall">Tổng điểm trung bình:</label>
 <input type="number" name="all-overall" class="all-overall" disabled><label for="totalOverall">Điểm trung bình:</label>
-<input type="number" name="totalOverall" class="totalOverall" disabled><button class="solve">Solve</button>`
+<input type="number" name="totalOverall" class="totalOverall" disabled><button class="solve btn btn-success">Solve</button>`
 rowElement.onkeypress = (e) => {
     let rows = rowElement.value
     if (e.keyCode == 13) {
@@ -14,7 +14,7 @@ rowElement.onkeypress = (e) => {
         let htmls = []
         for (i = 0; i < rows; i++) {
             htmls.push(`<div class="root-container">
-            <label for="subject">Môn:</label>
+        <label for="subject">Môn:</label>
         <input type="text" class=${'subject'+i} name="subject">
         <label for="mark">Điểm:</label>
         <input type="number" name="mark" class=${'mark'+i}>
