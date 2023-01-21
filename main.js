@@ -1,91 +1,76 @@
-let rowElement = document.querySelector('.row')
-let submitElement = document.querySelector('.submit')
-let containerElement = document.querySelector('.page-container')
-let rootElement = document.querySelector('.root')
-let rootContainerElement
-let overallRow = `<label for="totalCredits">Tổng số tín chỉ:</label>
-<input type="number" name="totalCredits" class="totalCredits" disabled><label for="all-overall">Tổng điểm trung bình:</label>
-<input type="number" name="all-overall" class="all-overall" disabled><label for="totalOverall">Điểm trung bình:</label>
-<input type="number" name="totalOverall" class="totalOverall" disabled><button class="solve btn btn-success">Solve</button>`
-rowElement.onkeypress = (e) => {
-    let rows = rowElement.value
-    if (e.keyCode == 13) {
-        containerElement.innerHTML = overallRow
-        let htmls = []
-        for (i = 0; i < rows; i++) {
-            htmls.push(`<div class="root-container">
-        <label for="subject">Môn:</label>
-        <input type="text" class=${'subject'+i} name="subject">
-        <label for="mark">Điểm:</label>
-        <input type="number" name="mark" class=${'mark'+i}>
-        <label for="grade">Loại:</label>
-        <input type="text" class=${'grade'+i} name="grade" disabled>
-        <label for="credits">Số tín chỉ:</label>
-        <input type="number" name="credits" class=${'credits'+i}>
-        <label for="overall">Điểm trung bình:</label>
-        <input type="number" name="overall" class=${'overall'+i} disabled>
-            </div>`)
-        }
-        let html = htmls.join('')
-        rootElement.innerHTML = `${html}`
-        rootContainerElement = document.querySelectorAll('.root-container')
-        let solveBtn = document.querySelector('.solve')
-        solveBtn.onclick = handleSubmitClick
-    }
-}
-rowElement.oninput = (e) => {
-    let rows = rowElement.value
-    submitElement.onclick = () => {
-        containerElement.innerHTML = overallRow
-        let htmls = []
-        for (i = 0; i < rows; i++) {
-            htmls.push(`<div class="root-container">
-            <label for="subject">Môn:</label>
-        <input type="text" class=${'subject'+i} name="subject">
-        <label for="mark">Điểm:</label>
-        <input type="number" name="mark" class=${'mark'+i}>
-        <label for="grade">Loại:</label>
-        <input type="text" class=${'grade'+i} name="grade" disabled>
-        <label for="credits">Số tín chỉ:</label>
-        <input type="number" name="credits" class=${'credits'+i}>
-        <label for="overall">Điểm trung bình:</label>
-        <input type="number" name="overall" class=${'overall'+i} disabled>
-            </div>`)
-        }
-        let html = htmls.join('')
-        rootElement.innerHTML = `${html}`
-        let solveBtn = document.querySelector('.solve')
-        solveBtn.onclick = handleSubmitClick
-        
-    }
+// Lấy số hàng từ input
+let rowElement = document.querySelector('.page__row');
+let row;
+
+rowElement.oninput = () => {
+    row = rowElement.value;
 }
 
-function handleSubmitClick() {
-    rootContainerElement = document.querySelectorAll('.root-container')
-    let totalOverallElement = document.querySelector('.totalOverall')
-    let totalCreditsElement = document.querySelector('.totalCredits')
-    let allOverallElement = document.querySelector('.all-overall')
-    let totalOverall = 0
-    let totalCreadits = 0
-    let allOverall = 0
-    for (let i = 0; i < rootContainerElement.length; i++) {
-        let markElement = document.querySelector(`.mark${i}`)
-        let gradeElement = document.querySelector(`.grade${i}`)
-        let creditsElement = document.querySelector(`.credits${i}`)
-        let overallElement = document.querySelector(`.overall${i}`)
-        let mark = markElement.value
-        let grade = checkMark(mark)
-        gradeElement.value = grade
-        let credits = creditsElement.value
-        let marks = changeGradetoMark(grade)
-        overallElement.value = marks * credits
-        allOverall += Number(overallElement.value)
-        totalCreadits += Number(credits)
+// Xử lí submit btn onclick
+let submitElement = document.querySelector('.page__btn');
+let pageElement = document.querySelector('.page');
+let subPageElement = document.querySelector('.sub-page') 
+let bodyElement = document.querySelector('body')
+let overallContainerElement = document.querySelector('.overall-container')
+
+submitElement.onclick = () => {
+    if (row != undefined) {
+        pageElement.innerHTML = '';
+        let htmls = [];
+        for (let i = 0; i < row; i++) {
+            htmls.push(`
+            <div class="sub-page__container">
+            <label for="subject${i}">Môn:</label>
+            <input type="text" class="subject${i}" placeholder="Môn" name="subject${i}">
+            <label for="mark${i}">Điểm:</label>
+            <input type="number" name="mark${i}" class="mark${i}" placeholder="Nhập điểm">
+            <label for="grade${i}">Loại:</label>
+            <input type="text" class="grade${i}" placeholder="Loại" name="grade${i}" disabled>
+            <label for="credits${i}">Số tín chỉ:</label>
+            <input type="number" name="credits${i}" class="credits${i}" placeholder="Nhập số tín chỉ">
+            <label for="overall${i}">Điểm trung bình:</label>
+            <input type="number" name="overall${i}" class="overall${i}" placeholder="Điểm trung bình" disabled>
+            </div>
+            `);
+        }
+        let html = htmls.join('');
+        bodyElement.style.display = "block";
+        subPageElement.innerHTML = html;
+        overallContainerElement.innerHTML = `<label for="totalCredit">Tổng số tín chỉ</label>
+        <input type="number" name="totalCredit" class="totalCredit" disabled>
+        <label for="totalMark">Tổng điểm trung bình</label>
+        <input type="number" name="totalMark" class="totalMark" disabled>
+        <label for="totalOverall">Điểm trung bình</label>
+        <input type="number" name="totalOverall" class="totalOverall" disabled>
+        <button class="btn btn-success overall-container__btn">Tính</button>`;
+
+        let overallContainerButton = document.querySelector('.overall-container__btn');
+        overallContainerButton.onclick = () => {
+            let totalCreditElement = document.querySelector('.totalCredit');
+            let totalMarkElement = document.querySelector('.totalMark');
+            let totalOverallElement = document.querySelector('.totalOverall');
+            let totalCredit = 0, totalMark = 0;
+            for (let i = 0; i < row; i++) {
+                let markElement = document.querySelector(`.mark${i}`);
+                let gradeElement = document.querySelector(`.grade${i}`);
+                let creditElement = document.querySelector(`.credits${i}`);
+                let overallElement = document.querySelector(`.overall${i}`);
+                let mark = markElement.value;
+                let grade = checkMark(mark);
+                gradeElement.value = grade;
+                let overall = changeGradetoMark(gradeElement.value) * creditElement.value;
+                overallElement.value = overall;
+                totalCredit += Number(creditElement.value);
+                totalMark += overall;
+            }
+
+            totalCreditElement.value = totalCredit;
+            totalMarkElement.value = totalMark;
+            totalOverallElement.value = totalMark / totalCredit;
+        }
+    } else {
+        alert('Xin hãy nhập số dòng')
     }
-    totalOverall = allOverall / totalCreadits
-    allOverallElement.value = allOverall
-    totalCreditsElement.value = totalCreadits
-    totalOverallElement.value = totalOverall
 }
 
 function checkMark(mark) {
@@ -135,4 +120,3 @@ function changeGradetoMark(grade) {
     }
     return output
 }
-
